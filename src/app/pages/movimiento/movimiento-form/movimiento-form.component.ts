@@ -107,25 +107,6 @@ import { Movimiento, MovimientoCreateDto, MovimientoUpdateDto, Page } from '../.
   styles: [`
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :host {
-      --bg-primary: #ffffff;
-      --bg-secondary: #f7f6f3;
-      --bg-tertiary: #f1efe8;
-      --text-primary: #1a1a1a;
-      --text-secondary: #5f5e5a;
-      --text-tertiary: #888780;
-      --border-light: rgba(0,0,0,0.08);
-      --border-mid: rgba(0,0,0,0.14);
-      --border-strong: rgba(0,0,0,0.22);
-      --radius-md: 8px;
-      --radius-lg: 12px;
-      --header-bg: #1a1a2e;
-      --accent: #2563eb;
-      --accent-hover: #1d4ed8;
-      --font-sans: 'DM Sans', sans-serif;
-      --font-mono: 'DM Mono', monospace;
-    }
-
     .header {
       background: var(--header-bg);
       padding: 14px 28px;

@@ -110,25 +110,6 @@ import { Movimiento, Page } from '../../../models/movimiento.model';
   styles: [`
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :host {
-      --bg-primary: #ffffff;
-      --bg-secondary: #f7f6f3;
-      --bg-tertiary: #f1efe8;
-      --text-primary: #1a1a1a;
-      --text-secondary: #5f5e5a;
-      --text-tertiary: #888780;
-      --border-light: rgba(0,0,0,0.08);
-      --border-mid: rgba(0,0,0,0.14);
-      --border-strong: rgba(0,0,0,0.22);
-      --radius-md: 8px;
-      --radius-lg: 12px;
-      --header-bg: #1a1a2e;
-      --accent: #2563eb;
-      --accent-hover: #1d4ed8;
-      --font-sans: 'DM Sans', sans-serif;
-      --font-mono: 'DM Mono', monospace;
-    }
-
     .header {
       background: var(--header-bg);
       padding: 14px 28px;
@@ -490,11 +471,24 @@ export class MovimientoListComponent implements OnInit {
   }
 
   getBadgeClass(tipo: string): string {
-    switch (tipo) {
-      case 'Venta': return 'badge-venta';
-      case 'Compra': return 'badge-compra';
-      case 'Devolución': return 'badge-devolucion';
-      default: return '';
+    // 1. Si viene nulo o indefinido, salimos rápido
+    if (!tipo) return '';
+  
+    // 2. Pasamos a minúsculas y quitamos espacios en blanco de los extremos
+    const tipoNormalizado = tipo.toLowerCase().trim();
+  
+    // 3. Evaluamos usando "includes" para atrapar variaciones
+    if (tipoNormalizado.includes('venta')) {
+      return 'badge-venta';
+    } 
+    if (tipoNormalizado.includes('compra')) {
+      return 'badge-compra';
+    } 
+    if (tipoNormalizado.includes('devoluci')) { 
+      // Usar 'devoluci' atrapa tanto 'devolución' (con tilde) como 'devolucion' (sin tilde)
+      return 'badge-devolucion';
     }
+  
+    return '';
   }
 }
