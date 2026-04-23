@@ -423,13 +423,13 @@ export class MovimientoListComponent implements OnInit {
   calculateStats(): void {
     this.totalRegistros = this.movimientos.length;
     this.totalVentas = this.movimientos
-      .filter(m => m.movimiento === 'Venta')
+      .filter(m => m.movimiento === 'VENTA')
       .reduce((sum, m) => sum + m.monto, 0);
     this.totalCompras = this.movimientos
-      .filter(m => m.movimiento === 'Compra')
+      .filter(m => m.movimiento === 'COMPRA')
       .reduce((sum, m) => sum + m.monto, 0);
     this.totalDevoluciones = this.movimientos
-      .filter(m => m.movimiento === 'Devolución')
+      .filter(m => m.movimiento === 'DEVOLUCION')
       .reduce((sum, m) => sum + m.monto, 0);
   }
 
