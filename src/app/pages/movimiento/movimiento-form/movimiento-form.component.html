@@ -1,0 +1,93 @@
+<header class="header">
+  <div class="header-logo">
+    <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="2" y="2" width="12" height="12" rx="2" stroke="#fff" stroke-width="1.5"/>
+      <path d="M5 8h6M5 5.5h4M5 10.5h3" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <span class="header-title">Tracker Movimientos</span>
+</header>
+
+<main class="main">
+  <h1 class="page-title">{{ isEditMode ? 'Editar' : 'Nuevo' }} movimiento</h1>
+
+  <form class="form" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="fecha">Fecha</label>
+        <input
+          type="date"
+          id="fecha"
+          [(ngModel)]="form.fecha"
+          name="fecha"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="tipoPrenda">Tipo de prenda</label>
+        <select
+          id="tipoPrenda"
+          [(ngModel)]="form.tipoPrenda"
+          name="tipoPrenda"
+          required
+        >
+          <option value="">Seleccionar...</option>
+          <option value="Remera">Remera</option>
+          <option value="Pantalón">Pantalón</option>
+          <option value="Campera">Campera</option>
+          <option value="Calzado">Calzado</option>
+          <option value="Accesorio">Accesorio</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group full">
+      <label for="descripcion">Descripción</label>
+      <input
+        type="text"
+        id="descripcion"
+        [(ngModel)]="form.descripcion"
+        name="descripcion"
+        placeholder="Ingrese descripción del movimiento"
+        required
+      />
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="monto">Monto</label>
+        <input
+          type="number"
+          id="monto"
+          [(ngModel)]="form.monto"
+          name="monto"
+          step="0.01"
+          min="0"
+          placeholder="0.00"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="movimiento">Tipo de movimiento</label>
+        <select
+          id="movimiento"
+          [(ngModel)]="form.movimiento"
+          name="movimiento"
+          required
+        >
+          <option value="">Seleccionar...</option>
+          <option value="VENTA">Venta</option>
+          <option value="COMPRA">Compra</option>
+          <option value="DEVOLUCION">Devolución</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn-cancel" (click)="cancel()">Cancelar</button>
+      <button type="submit" class="btn-save">{{ isEditMode ? 'Actualizar' : 'Guardar' }}</button>
+    </div>
+  </form>
+</main>

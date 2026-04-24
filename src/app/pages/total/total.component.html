@@ -1,0 +1,19 @@
+<div class="stats">
+    <div class="stat-card">
+      <div class="stat-label">Total registros</div>
+      <div class="stat-value neutral" id="statTotal">{{ totalRegistros }}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Ventas</div>
+      <div class="stat-value green">{{ totalVentas | currency:'USD' }}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Compras</div>
+      <div class="stat-value blue">{{ totalCompras | currency:'USD' }}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Devoluciones</div>
+      <div class="stat-value amber">{{ totalDevoluciones | currency:'USD' }}</div>
+    </div>
+  </div>
+  
