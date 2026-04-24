@@ -34,6 +34,8 @@ export class MovimientoListComponent implements OnInit {
   selectedMovimiento: Movimiento | null = null;
   dupPreviewPlaceholder = 'Seleccioná un movimiento para ver el detalle';
   dupHint = 'Se insertará 1 copia';
+  successModalOpen = false;
+  successMsg = '';
 
   ngOnInit(): void {
     this.loadMovimientos();
@@ -101,6 +103,9 @@ export class MovimientoListComponent implements OnInit {
       next: () => {
         this.movimientos = this.movimientos.filter(m => m.id !== mov.id);
         this.filterTable();
+        this.totalElements--;
+        this.successMsg = 'Movimiento eliminado exitosamente';
+        this.successModalOpen = true;
       },
       error: (err: Error) => console.error('Error deleting movimiento:', err)
     });
@@ -197,8 +202,22 @@ export class MovimientoListComponent implements OnInit {
         this.filteredMovimientos = [...this.movimientos];
         this.totalElements += nuevos.length;
         this.closeDupModal();
+        this.successMsg = nuevos.length === 1
+          ? 'Movimiento agregado exitosamente'
+          : 'Movimientos agregados exitosamente';
+        this.successModalOpen = true;
       },
       error: (err: Error) => console.error('Error duplicando movimiento:', err)
     });
+  }
+
+  closeSuccessModal(): void {
+    this.successModalOpen = false;
+  }
+
+  overlaySuccessClick(e: MouseEvent): void {
+    if ((e.target as HTMLElement).classList.contains('success-overlay')) {
+      this.closeSuccessModal();
+    }
   }
 }

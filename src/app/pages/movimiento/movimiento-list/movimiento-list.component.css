@@ -574,3 +574,41 @@ tbody tr:last-child td { border-bottom: none; }
 }
 .btn-confirm:hover:not(:disabled) { background: var(--accent-hover); }
 .btn-confirm:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.success-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+}
+.success-overlay.open { display: flex; }
+
+.success-modal {
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  padding: 32px 36px 24px;
+  width: 380px;
+  max-width: calc(100vw - 32px);
+  text-align: center;
+  animation: modalIn 0.18s ease;
+}
+
+.success-icon {
+  margin-bottom: 16px;
+}
+
+.success-message {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+}
+
+.success-actions {
+  display: flex;
+  justify-content: center;
+}

@@ -181,3 +181,19 @@
     </div>
   </div>
 </div>
+
+<!-- Modal éxito duplicar -->
+<div class="modal-overlay success-overlay" [class.open]="successModalOpen" (click)="overlaySuccessClick($event)">
+  <div class="modal success-modal" role="dialog" aria-modal="true">
+    <div class="success-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="10" stroke="#22c55e" stroke-width="2"/>
+        <path d="M8 12l2.5 2.5L16 9" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="success-message">{{ successMsg }}</div>
+    <div class="success-actions">
+      <button class="btn-confirm" (click)="closeSuccessModal()">Aceptar</button>
+    </div>
+  </div>
+</div>

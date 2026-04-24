@@ -28,6 +28,9 @@ export class MovimientoFormComponent implements OnInit {
     movimiento: ''
   };
 
+  successModalOpen = false;
+  successMsg = '';
+
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id && id !== 'nuevo') {
@@ -58,14 +61,31 @@ export class MovimientoFormComponent implements OnInit {
   onSubmit(): void {
     if (this.isEditMode && this.movimientoId) {
       this.movimientoService.update(this.movimientoId, this.form).subscribe({
-        next: () => this.router.navigate(['/movimientos']),
+        next: () => {
+          this.successMsg = 'Movimiento actualizado exitosamente';
+          this.successModalOpen = true;
+        },
         error: (err) => console.error('Error updating movimiento:', err)
       });
     } else {
       this.movimientoService.create(this.form as MovimientoCreateDto).subscribe({
-        next: () => this.router.navigate(['/movimientos']),
+        next: () => {
+          this.successMsg = 'Movimiento creado exitosamente';
+          this.successModalOpen = true;
+        },
         error: (err) => console.error('Error creating movimiento:', err)
       });
+    }
+  }
+
+  closeSuccessModal(): void {
+    this.successModalOpen = false;
+    this.router.navigate(['/movimientos']);
+  }
+
+  overlaySuccessClick(e: MouseEvent): void {
+    if ((e.target as HTMLElement).classList.contains('success-overlay')) {
+      this.closeSuccessModal();
     }
   }
 
