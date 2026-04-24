@@ -26,6 +26,15 @@ export class MovimientoListComponent implements OnInit {
   totalElements = 0;
   totalPages = 0;
 
+  dupModalOpen = false;
+  dupCode = '';
+  dupCantidad = 1;
+  dupError = false;
+  dupErrorMsg = '';
+  selectedMovimiento: Movimiento | null = null;
+  dupPreviewPlaceholder = 'Seleccioná un movimiento para ver el detalle';
+  dupHint = 'Se insertará 1 copia';
+
   ngOnInit(): void {
     this.loadMovimientos();
   }
@@ -113,5 +122,83 @@ export class MovimientoListComponent implements OnInit {
     }
 
     return '';
+  }
+
+  openDupModal(): void {
+    this.dupModalOpen = true;
+    this.dupCode = '';
+    this.dupCantidad = 1;
+    this.dupError = false;
+    this.dupErrorMsg = '';
+    this.selectedMovimiento = null;
+    this.dupPreviewPlaceholder = 'Ingresá un código y presioná Buscar';
+    this.dupHint = 'Se insertará 1 copia';
+  }
+
+  closeDupModal(): void {
+    this.dupModalOpen = false;
+  }
+
+  overlayClick(e: MouseEvent): void {
+    if ((e.target as HTMLElement).classList.contains('modal-overlay')) {
+      this.closeDupModal();
+    }
+  }
+
+  onCodeInput(): void {
+    this.dupError = false;
+    if (!this.dupCode.trim()) {
+      this.selectedMovimiento = null;
+      this.dupPreviewPlaceholder = 'Ingresá un código y presioná Buscar';
+    }
+  }
+
+  buscarMovimiento(): void {
+    const code = this.dupCode.trim();
+    if (!code) {
+      this.dupError = true;
+      this.dupErrorMsg = 'Ingresá un código para buscar.';
+      this.selectedMovimiento = null;
+      this.dupPreviewPlaceholder = 'Ingresá un código y presioná Buscar';
+      return;
+    }
+
+    const mov = this.movimientos.find(m => m.id.toString() === code);
+    if (!mov) {
+      this.dupError = true;
+      this.dupErrorMsg = `No existe ningún movimiento con el código "${code}".`;
+      this.selectedMovimiento = null;
+      this.dupPreviewPlaceholder = 'Ingresá un código y presioná Buscar';
+      return;
+    }
+
+    this.dupError = false;
+    this.selectedMovimiento = mov;
+    this.dupPreviewPlaceholder = '';
+  }
+
+  updateHint(): void {
+    const n = this.dupCantidad || 0;
+    if (n > 0) {
+      this.dupHint = n === 1
+        ? 'Se insertará 1 copia'
+        : `Se insertarán ${n} copias`;
+    } else {
+      this.dupHint = 'Ingresá un número mayor a 0';
+    }
+  }
+
+  confirmDuplicate(): void {
+    if (!this.selectedMovimiento || this.dupCantidad < 1) return;
+
+    this.movimientoService.duplicate(this.selectedMovimiento.id, this.dupCantidad).subscribe({
+      next: (nuevos) => {
+        this.movimientos = [...this.movimientos, ...nuevos];
+        this.filteredMovimientos = [...this.movimientos];
+        this.totalElements += nuevos.length;
+        this.closeDupModal();
+      },
+      error: (err: Error) => console.error('Error duplicando movimiento:', err)
+    });
   }
 }
