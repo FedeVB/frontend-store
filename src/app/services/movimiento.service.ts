@@ -55,4 +55,8 @@ export class MovimientoService {
   duplicate(id: number, cantidad: number): Observable<Movimiento[]> {
     return this.http.get<Movimiento[]>(`${this.baseUrl}/duplicate/id/${id}/cantidad/${cantidad}`);
   }
+
+  findById(id: number): Observable<Movimiento> {
+    return this.http.get<Movimiento>(`${this.baseUrl}/id/${id}`);
+  }
 }

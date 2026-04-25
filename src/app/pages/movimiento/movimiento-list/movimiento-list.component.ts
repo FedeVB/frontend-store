@@ -168,18 +168,30 @@ export class MovimientoListComponent implements OnInit {
       return;
     }
 
-    const mov = this.movimientos.find(m => m.id.toString() === code);
-    if (!mov) {
+    const id = parseInt(code, 10);
+    if (isNaN(id)) {
       this.dupError = true;
-      this.dupErrorMsg = `No existe ningún movimiento con el código "${code}".`;
+      this.dupErrorMsg = 'El código debe ser un número válido.';
       this.selectedMovimiento = null;
       this.dupPreviewPlaceholder = 'Ingresá un código y presioná Buscar';
       return;
     }
 
-    this.dupError = false;
-    this.selectedMovimiento = mov;
-    this.dupPreviewPlaceholder = '';
+    this.dupPreviewPlaceholder = 'Buscando...';
+
+    this.movimientoService.findById(id).subscribe({
+      next: (mov) => {
+        this.dupError = false;
+        this.selectedMovimiento = mov;
+        this.dupPreviewPlaceholder = '';
+      },
+      error: (err) => {
+        this.dupError = true;
+        this.dupErrorMsg = `No existe ningún movimiento con el código "${code}".`;
+        this.selectedMovimiento = null;
+        this.dupPreviewPlaceholder = 'Ingresá un código y presioná Buscar';
+      }
+    });
   }
 
   updateHint(): void {
