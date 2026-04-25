@@ -19,7 +19,9 @@ export class MovimientoListComponent implements OnInit {
 
   movimientos: Movimiento[] = [];
   filteredMovimientos: Movimiento[] = [];
-  searchTerm = '';
+  searchId = '';
+  searchTipoPrenda = '';
+  searchTipoMovimiento = '';
 
   currentPage = 0;
   pageSize = 10;
@@ -42,31 +44,27 @@ export class MovimientoListComponent implements OnInit {
   }
 
   loadMovimientos(): void {
-    this.movimientoService.findAll(this.currentPage, this.pageSize).subscribe({
+    this.movimientoService.findAllSorted(
+      this.searchTipoPrenda || undefined,
+      this.searchTipoMovimiento || undefined,
+      this.currentPage,
+      this.pageSize
+    ).subscribe({
       next: (page: Page<Movimiento>) => {
-        this.movimientos = page.content;
+        let data = page.content;
+        if (this.searchId) {
+          const id = parseInt(this.searchId, 10);
+          if (!isNaN(id)) {
+            data = data.filter(m => m.id === id);
+          }
+        }
+        this.movimientos = data;
         this.filteredMovimientos = [...this.movimientos];
         this.totalElements = page.totalElements;
         this.totalPages = page.totalPages;
       },
       error: (err: Error) => console.error('Error loading movimientos:', err)
     });
-  }
-
-  filterTable(): void {
-    const q = this.searchTerm.toLowerCase().trim();
-    if (!q) {
-      this.filteredMovimientos = [...this.movimientos];
-    } else {
-      this.filteredMovimientos = this.movimientos.filter(m =>
-        m.descripcion.toLowerCase().includes(q)
-      );
-    }
-  }
-
-  clearSearch(): void {
-    this.searchTerm = '';
-    this.filterTable();
   }
 
   goToPage(page: number): void {
@@ -88,6 +86,19 @@ export class MovimientoListComponent implements OnInit {
     this.loadMovimientos();
   }
 
+  clearSearch(): void {
+    this.searchId = '';
+    this.searchTipoPrenda = '';
+    this.searchTipoMovimiento = '';
+    this.currentPage = 0;
+    this.loadMovimientos();
+  }
+
+  searchMovimientos(): void {
+    this.currentPage = 0;
+    this.loadMovimientos();
+  }
+
   nuevoMovimiento(): void {
     this.router.navigate(['/movimientos/nuevo']);
   }
@@ -102,7 +113,7 @@ export class MovimientoListComponent implements OnInit {
     this.movimientoService.deleteById(mov.id).subscribe({
       next: () => {
         this.movimientos = this.movimientos.filter(m => m.id !== mov.id);
-        this.filterTable();
+        this.filteredMovimientos = [...this.movimientos];
         this.totalElements--;
         this.successMsg = 'Movimiento eliminado exitosamente';
         this.successModalOpen = true;

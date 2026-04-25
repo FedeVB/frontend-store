@@ -59,4 +59,24 @@ export class MovimientoService {
   findById(id: number): Observable<Movimiento> {
     return this.http.get<Movimiento>(`${this.baseUrl}/id/${id}`);
   }
+
+  findAllSorted(
+    tipoPrenda?: string,
+    tipoMovimiento?: string,
+    page: number = 0,
+    size: number = 20
+  ): Observable<Page<Movimiento>> {
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString());
+
+    if (tipoPrenda) {
+      params = params.set('tipoPrenda', tipoPrenda);
+    }
+    if (tipoMovimiento) {
+      params = params.set('tipoMovimiento', tipoMovimiento);
+    }
+
+    return this.http.get<Page<Movimiento>>(`${this.baseUrl}/sorted`, { params });
+  }
 }
