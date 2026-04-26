@@ -36,7 +36,7 @@
       Totales
     </button>
     <div class="search-filters">
-    <input class="filter-input" type="text" placeholder="ID" [(ngModel)]="searchId" (keydown.enter)="searchMovimientos()" />
+    <input class="filter-input" type="text" placeholder="Descripción" [(ngModel)]="searchDescripcion" (keydown.enter)="searchMovimientos()" />
     <input class="filter-input" type="text" placeholder="Tipo prenda" [(ngModel)]="searchTipoPrenda" (keydown.enter)="searchMovimientos()" />
     <input class="filter-input" type="text" placeholder="Tipo movimiento" [(ngModel)]="searchTipoMovimiento" (keydown.enter)="searchMovimientos()" />
     <button class="btn-buscar-filtro" (click)="searchMovimientos()">Buscar</button>

@@ -19,12 +19,12 @@ export class MovimientoListComponent implements OnInit {
 
   movimientos: Movimiento[] = [];
   filteredMovimientos: Movimiento[] = [];
-  searchId = '';
+  searchDescripcion = '';
   searchTipoPrenda = '';
   searchTipoMovimiento = '';
 
   currentPage = 0;
-  pageSize = 10;
+  pageSize = 5;
   totalElements = 0;
   totalPages = 0;
 
@@ -47,18 +47,12 @@ export class MovimientoListComponent implements OnInit {
     this.movimientoService.findAllSorted(
       this.searchTipoPrenda || undefined,
       this.searchTipoMovimiento || undefined,
+      this.searchDescripcion || undefined,
       this.currentPage,
       this.pageSize
     ).subscribe({
       next: (page: Page<Movimiento>) => {
-        let data = page.content;
-        if (this.searchId) {
-          const id = parseInt(this.searchId, 10);
-          if (!isNaN(id)) {
-            data = data.filter(m => m.id === id);
-          }
-        }
-        this.movimientos = data;
+        this.movimientos = page.content;
         this.filteredMovimientos = [...this.movimientos];
         this.totalElements = page.totalElements;
         this.totalPages = page.totalPages;
@@ -87,7 +81,7 @@ export class MovimientoListComponent implements OnInit {
   }
 
   clearSearch(): void {
-    this.searchId = '';
+    this.searchDescripcion = '';
     this.searchTipoPrenda = '';
     this.searchTipoMovimiento = '';
     this.currentPage = 0;

@@ -63,6 +63,7 @@ export class MovimientoService {
   findAllSorted(
     tipoPrenda?: string,
     tipoMovimiento?: string,
+    descripcion?: string,
     page: number = 0,
     size: number = 20
   ): Observable<Page<Movimiento>> {
@@ -75,6 +76,9 @@ export class MovimientoService {
     }
     if (tipoMovimiento) {
       params = params.set('tipoMovimiento', tipoMovimiento);
+    }
+    if (descripcion) {
+      params = params.set('descripcion', descripcion);
     }
 
     return this.http.get<Page<Movimiento>>(`${this.baseUrl}/sorted`, { params });
