@@ -1,0 +1,93 @@
+<header class="header">
+  <div class="header-logo">
+    <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="2" y="2" width="12" height="12" rx="2" stroke="#fff" stroke-width="1.5"/>
+      <path d="M5 8h6M5 5.5h4M5 10.5h3" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <span class="header-title">Tracker Movimientos</span>
+</header>
+
+<main class="main">
+  <h1 class="page-title">Totales</h1>
+
+  @if (loading) {
+    <div class="loading">Cargando...</div>
+  } @else {
+    <div class="totals-grid">
+      <div class="total-card ventas">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          </svg>
+        </div>
+        <div class="card-content">
+          <div class="card-label">Ventas</div>
+          <div class="card-value">{{ totalVentas | currency:'USD' }}</div>
+          <div class="card-count">{{ ventasCount }} transacciones</div>
+        </div>
+      </div>
+
+      <div class="total-card compras">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <path d="M3 6h18"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+        </div>
+        <div class="card-content">
+          <div class="card-label">Compras</div>
+          <div class="card-value">{{ totalCompras | currency:'USD' }}</div>
+          <div class="card-count">{{ comprasCount }} transacciones</div>
+        </div>
+      </div>
+
+      <div class="total-card devoluciones">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+          </svg>
+        </div>
+        <div class="card-content">
+          <div class="card-label">Devoluciones</div>
+          <div class="card-value">{{ totalDevoluciones | currency:'USD' }}</div>
+          <div class="card-count">{{ devolucionesCount }} transacciones</div>
+        </div>
+      </div>
+
+      <div class="total-card balance" [class.positive]="getBalance() >= 0" [class.negative]="getBalance() < 0">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M23 6l-9.5 9.5-5-5L1 18"/>
+            <path d="M17 6h6v6"/>
+          </svg>
+        </div>
+        <div class="card-content">
+          <div class="card-label">Balance</div>
+          <div class="card-value">{{ getBalance() | currency:'USD' }}</div>
+          <div class="card-count">{{ totalRegistros }} registros</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="summary-section">
+      <h2 class="section-title">Resumen</h2>
+      <div class="summary-grid">
+        <div class="summary-item">
+          <span class="summary-label">Margen de ganancia</span>
+          <span class="summary-value">{{ getProfitMargin() | number:'1.2-2' }}%</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Promedio por venta</span>
+          <span class="summary-value">{{ ventasCount > 0 ? (totalVentas / ventasCount | currency:'USD') : '$0.00' }}</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Promedio por compra</span>
+          <span class="summary-value">{{ comprasCount > 0 ? (totalCompras / comprasCount | currency:'USD') : '$0.00' }}</span>
+        </div>
+      </div>
+    </div>
+  }
+</main>

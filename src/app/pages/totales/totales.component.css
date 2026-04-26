@@ -1,0 +1,205 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+.header {
+  background: var(--header-bg);
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header-logo {
+  width: 30px; height: 30px;
+  background: linear-gradient(135deg, #e8a87c, #c97b4b);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.header-logo svg { width: 16px; height: 16px; }
+
+.header-title {
+  color: #f0ede8;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 36px 28px 60px;
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.025em;
+  margin-bottom: 24px;
+}
+
+.loading {
+  text-align: center;
+  padding: 48px;
+  color: var(--text-tertiary);
+}
+
+.totals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.total-card {
+  background: var(--bg-primary);
+  border: 0.5px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.total-card.ventas {
+  border-left: 4px solid #3b6d11;
+}
+
+.total-card.compras {
+  border-left: 4px solid #185fa5;
+}
+
+.total-card.devoluciones {
+  border-left: 4px solid #854f0b;
+}
+
+.total-card.balance {
+  border-left: 4px solid var(--accent);
+}
+
+.total-card.balance.positive {
+  border-left-color: #3b6d11;
+}
+
+.total-card.balance.negative {
+  border-left-color: #a32d2d;
+}
+
+.card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.card-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.ventas .card-icon {
+  background: #eaf3de;
+  color: #3b6d11;
+}
+
+.compras .card-icon {
+  background: #e6f1fb;
+  color: #185fa5;
+}
+
+.devoluciones .card-icon {
+  background: #faeeda;
+  color: #854f0b;
+}
+
+.balance .card-icon {
+  background: #eef3ff;
+  color: var(--accent);
+}
+
+.balance.positive .card-icon {
+  background: #eaf3de;
+  color: #3b6d11;
+}
+
+.balance.negative .card-icon {
+  background: #fcebeb;
+  color: #a32d2d;
+}
+
+.card-content {
+  flex: 1;
+}
+
+.card-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-tertiary);
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.card-value {
+  font-size: 24px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.card-count {
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+.summary-section {
+  background: var(--bg-primary);
+  border: 0.5px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.summary-label {
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+.summary-value {
+  font-size: 18px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  color: var(--text-primary);
+}
+
+@media (max-width: 600px) {
+  .main { padding: 24px 16px 48px; }
+  .page-title { font-size: 22px; }
+  .totals-grid { grid-template-columns: 1fr; }
+}
