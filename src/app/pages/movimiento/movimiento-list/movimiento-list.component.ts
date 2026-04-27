@@ -130,6 +130,9 @@ export class MovimientoListComponent implements OnInit {
     if (tipoNormalizado.includes('devoluci')) {
       return 'badge-devolucion';
     }
+    if (tipoNormalizado.includes('stock')) {
+      return 'badge-stock';
+    }
 
     return '';
   }
